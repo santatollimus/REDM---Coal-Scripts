@@ -1717,7 +1717,25 @@ Config.SkinnableAnimals = {
         texture = "mp_animal_bear_legendary_01",
         action = "Skinned",
         type = "inventory_items_mp"
-    },
+		},
+	    [RIDGEBACK_HASH] = {
+        name = "Legendary Ridgeback Spirit Bear",
+        givenItem = { "biggame", "legbears3", "bearc" },
+        givenAmount = { 1, 1, 1 },
+        givenDisplay = {
+            "Big Game Meat",
+            "Legendary Ridgeback Spirit Bear pelt",
+            "Bear Claw"
+        },
+        money = 0,
+        gold = 0,
+        rolPoints = 0,
+        xp = 1,
+        texture = "mp_animal_bear_legendary_02",   -- matches the second legendary bear variant
+        action = "Skinned",
+        type = "inventory_items_mp"
+		},
+
     [-511163808] = {
         name = "Legendary Chalk Horn Ram",
         givenItem = {"ramhorn", "legrams2" },
