@@ -99,14 +99,14 @@ CreateThread(function()
                 local dist = #(pCoords - tCoords)
 
                 if dist < 1.5 then
-                    -- Draw a small prompt above the trap
-                    Draw3DText("Press [E] to bait trap", tCoords.x, tCoords.y, tCoords.z + 0.5)
+-- Draw a small prompt above the trap
+Draw3DText("Press [G] to bait trap", tCoords.x, tCoords.y, tCoords.z + 0.5)
 
-                    -- INPUT_FRONTEND_ACCEPT = 0x07CE1E61 (Enter / A by default)
-                    -- If you want actual "E" key, we can swap this to a different control hash.
-                    if IsControlJustReleased(0, 0x07CE1E61) then
-                        TriggerServerEvent("coal_traps:baitTrap", trap.netId)
-                    end
+-- G key = 0x760A9C6F
+if IsControlJustReleased(0, 0x760A9C6F) then
+    TriggerServerEvent("coal_traps:baitTrap", trap.netId)
+end
+
 
                     break -- only handle one trap at a time
                 end
