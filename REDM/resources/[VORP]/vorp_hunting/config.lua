@@ -250,9 +250,21 @@ Config.SkinnableAnimals = {
         texture = "animal_bighornram",
         action = "Skinned"
     },
-    --[[ [2028722809]  = { name = "Boar", givenItem = {"porkfat" }, givenAmount = { 1, 1 }, givenDisplay = {
-        "Boar tusk", "Pig fat" }, money = 0, gold = 0, rolPoints = 0, xp = 1, texture = "animal_boar", action = "Skinned" }, ]]
-    [-1963605336] = {
+	[2028722809] = {
+		name = "Boar",
+		givenItem   = { "porkfat" },              -- or whatever you want
+		givenAmount = { 1 },                      -- match your item list
+		givenDisplay = { "Boar fat" },            -- optional, for prompts
+		money = 0,
+		gold = 0,
+		rolPoints = 0,
+		xp = 1,
+		texture = "animal_boar",                  -- NON-legendary texture
+		action = "Skinned",
+		type = "satchel_textures"                 -- normal type
+	}
+
+	[-1963605336] = {
         name = "Buck",
         givenItem = { "buckantler", "bucks"},
         givenAmount = { 1, 1 },
