@@ -203,7 +203,6 @@ HuntingConfig = {
 
 		-- generic Black-Tailed Jackrabbit (~2.0 -> 2)
 		[-541762431] = {},
-		
 		-- Black-Tailed Jackrabbit (~2.0 -> 2)
 		[311947389] = {
 		{ item = "gamey", count = 1 },

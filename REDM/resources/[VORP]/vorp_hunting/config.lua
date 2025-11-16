@@ -662,6 +662,19 @@ Config.SkinnableAnimals = {
         action = "Skinned",
         type = "satchel_textures"
     },
+	[1783710704] = {
+        name = "North American Racoon",
+        givenItem = {"raccoont", "raccoons" },
+        givenAmount = { 1, 1 },
+        givenDisplay = {"Raccoon tooth", "Raccoon skin" },
+        money = 0,
+        gold = 0,
+        rolPoints = 0,
+        xp = 1,
+        texture = "animal_raccoon",
+        action = "Skinned",
+        type = "satchel_textures"
+    },
     [-541762431]  = {
         name = "Black-Tailed Jackrabbit",
         givenItem = {"rabbits", "rabbitpaw" },
