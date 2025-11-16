@@ -64,7 +64,8 @@ AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
     -- Give meat & build summary
     local summary = giveMeatToPlayer(src, rewards)
     local msg = summary and ("You collected: " .. summary)
-                       or  "You collected nothing from the carcass."
+                     --  or  "You collected nothing from the carcass."
+					  or ""
 
     TriggerClientEvent("vorp:TipRight", src, msg, 4000)
 end)

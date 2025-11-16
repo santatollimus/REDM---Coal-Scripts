@@ -237,22 +237,25 @@ HuntingConfig = {
         ----------------------------------------------------------------
 		-- Striped Skunk ($2.25 -> Tier B -> 3)
         [-1211566332] = {
-            { item = "stringy", count = 3 },
+            { item = "stringy", count = 1 },
         },
 
         -- Striped Skunk ($2.25 -> Tier B -> 3)
         [-121266332] = {
-            { item = "stringy", count = 3 },
+            { item = "stringy", count = 1 },
         },
 
         -- North American Raccoon ($2.00 -> Tier C -> 2)
 		[1458540991] = {
-		{ item = "stringy", count = 2 },
+		{ item = "stringy", count = 1 },
+		{ item = "raccoont", count = 1 },
+		{ item = "raccoons", count = 1 },
 		},
 
         -- American Muskrat ($2.25 -> Tier B -> 3)
         [-1134449699] = {
-            { item = "stringy", count = 3 },
+            { item = "stringy", count = 1 },
+			{ item = "muskrats", count = 1 },
         },
 
         ----------------------------------------------------------------
