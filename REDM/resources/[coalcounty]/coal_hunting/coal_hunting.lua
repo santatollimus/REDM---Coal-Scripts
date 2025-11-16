@@ -187,24 +187,28 @@ HuntingConfig = {
 
 		-- Snapping Turtle (~2.0–2.5 range -> 2)
 		[-407730502] = {
-		{ item = "game", count = 2 },
+		{ item = "Gamey_Meat", count = 2 },
+		},
+		-- Turtle
+		[-1594634038] = {
+		{ item = "Gamey_Meat", count = 2 },
 		},
 
         -- Water / Boa / Rattlesnakes / Fer-de-lance (~2.75–3.0 -> Tier B -> 3)
         [-22968827] = {                     -- Water Snake
-            { item = "game", count = 3 },
+            { item = "stringy", count = 3 },
         },
         [-1790499186] = {                   -- Red Boa
-            { item = "game", count = 3 },
+            { item = "stringy", count = 3 },
         },
         [1464167925] = {                    -- Fer-de-Lance
-            { item = "game", count = 3 },
+            { item = "stringy", count = 3 },
         },
         [846659001] = {                     -- Black-Tailed Rattlesnake
-            { item = "game", count = 3 },
+            { item = "stringy", count = 3 },
         },
         [545068538] = {                     -- Western Rattlesnake
-            { item = "game", count = 3 },
+            { item = "stringy", count = 3 },
         },
 
         -- Virginia Possum (~2.0 -> Tier C -> 2)
