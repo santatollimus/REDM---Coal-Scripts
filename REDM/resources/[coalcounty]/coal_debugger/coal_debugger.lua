@@ -180,9 +180,5 @@ AddEventHandler("coal_debugger:rewardLog", function(msg)
 
     -- F8 console
     print("[coal_debugger] " .. msg)
-
-    -- Optional HUD box, if you’re using ShowDebugText
-    if ShowDebugText then
-        ShowDebugText(msg)
     end
 end)
