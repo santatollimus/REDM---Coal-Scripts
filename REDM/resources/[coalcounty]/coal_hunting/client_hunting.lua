@@ -15,44 +15,41 @@ end
 
 CreateThread(function()
     while true do
+        Wait(250)
+
         local ped = PlayerPedId()
 
-        if ped ~= 0 and isPedCarryingSomething(ped) then
-            local carried = getCarriedEntity(ped)
+        if isPedCarryingSomething(ped) then
+            local ent = getCarriedEntity(ped)
 
-            if carried ~= 0 and DoesEntityExist(carried) and carried ~= lastCarriedEntity then
-                lastCarriedEntity = carried
+            if ent ~= 0 and DoesEntityExist(ent) then
+                if ent ~= lastCarriedEntity then
+                    lastCarriedEntity = ent
 
-                local model = GetEntityModel(carried)
+                    local netId = NetworkGetNetworkIdFromEntity(ent)
+                    local model = GetEntityModel(ent)
 
-                -- Only try to get a net ID if the entity is networked,
-                -- otherwise RedM will warn: no net object for entity
-                local netId = 0
-                if NetworkGetEntityIsNetworked(carried) then
-                    netId = NetworkGetNetworkIdFromEntity(carried)
-                end
+                    -- Debug: you can comment this out later
+                    TriggerEvent("coal_debugger:log",
+                        ("[coal_hunting] Now carrying entity: netId=%s, model=%s")
+                        :format(tostring(netId), tostring(model))
+                    )
 
-                -- If you want it in chat too, uncomment this:
-                -- TriggerEvent("chat:addMessage", {
-                --     args = { "Hunting", "Model hash: " .. tostring(model) }
-                -- })
-
-                if netId ~= 0 then
-                    -- Send the carcass model + net ID to the server
+                    -- Tell server to process rewards + deletion
                     TriggerServerEvent("coal_hunting:PickedUpCarcass", netId, model)
-                else
-                    -- Optional: local-only entity; no server sync
-                    -- print(("[coal_hunting] Local-only carcass, model=%s"):format(tostring(model)))
                 end
             end
+        else
+            -- Not carrying anything
+            lastCarriedEntity = 0
         end
-
-        Wait(500)
     end
 end)
 
--- Optional: client-side delete if server asks (safety / desync fix)
+-- Client-side delete if server asks (safety / desync fix)
 RegisterNetEvent("coal_hunting:ClientDeleteCarcass", function(netId)
+    if not netId then return end
+
     local ent = NetworkGetEntityFromNetworkId(netId)
     if ent ~= 0 and DoesEntityExist(ent) then
         DeleteEntity(ent)
