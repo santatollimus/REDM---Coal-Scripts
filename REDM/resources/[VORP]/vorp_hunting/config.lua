@@ -1624,8 +1624,8 @@ Config.SkinnableAnimals = {
     [-1747620994] = {
         name = "Legendary Boa",
         givenItem = {"legendsnakes", "snaket", "Snake_Poison" },
-        givenAmount = { 1, 1 },
-        givenDisplay = {"Legendary Boa pelt", "Snake tooth" },
+        givenAmount = { 1, 1, 1 },
+        givenDisplay = {"Legendary Boa pelt", "Snake tooth", "Snake Poison" },
         money = 0,
         gold = 0,
         rolPoints = 0,
@@ -1770,10 +1770,7 @@ Config.SkinnableAnimals = {
         givenItem = { "biggame", "legbears3", "bearc" },
         givenAmount = { 1, 1, 1 },
         givenDisplay = {
-            "Big Game Meat",
-            "Legendary Ridgeback Spirit Bear pelt",
-            "Bear Claw"
-        },
+            "Big Game Meat", "Legendary Ridgeback Spirit Bear pelt", "Bear Claw"},
         money = 0,
         gold = 0,
         rolPoints = 0,

@@ -18,6 +18,15 @@ HuntingConfig = {
 		--Generic turkey/turtle pelt prop {delete it, but givenoitems}
 		[-1594634038] = {},
 		----------------------------------------------------------------
+		--"Legend 'wait for it' . . . daries"
+		-- Legendary Boa
+		[-1747620994] = {
+			{ item = "legendsnakes", count = 1 },
+			{ item = "stringy", count = 4 },
+			{ item = "snaket", count = 2 },
+			{ item = "Snake_Poison", count = 2 },
+		},
+		----------------------------------------------------------------
 		-- MUTTON-TYPE ANIMALS (Sheep, Ram)
 		----------------------------------------------------------------
 		--Sierra Nevada Ram

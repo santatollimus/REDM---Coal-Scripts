@@ -3,9 +3,10 @@
 local r, g, b = 255, 102, 0
 
 -- tightened crosshair
-local armSize   = 0.0018   -- was 0.0025
-local thickness = 0.0005   -- was 0.0007
-local offset    = 0.0018   -- was 0.0035
+local armSize   = 0.0022   -- was 0.0018
+local thickness = 0.0006   -- was 0.0005
+local offset    = 0.0019   -- tiny bump so the arms don’t overlap
+local rowGap    = 0.0015   -- vertical distance between rows
 
 local function isAiming()
     return IsAimCamActive() or IsControlPressed(0, 0xF84FA74F)
@@ -60,14 +61,14 @@ CreateThread(function()
 
             local cx, cy = 0.5, 0.5
 
-            -- Top-left arm
-            DrawRect(cx - offset, cy - offset, armSize, thickness, r, g, b, 255)
-            -- Bottom-right arm
-            DrawRect(cx + offset, cy + offset, armSize, thickness, r, g, b, 255)
-            -- Top-right arm
-            DrawRect(cx + offset, cy - offset, armSize, thickness, r, g, b, 255)
-            -- Bottom-left arm
-            DrawRect(cx - offset, cy + offset, armSize, thickness, r, g, b, 255)
+-- middle row (what you have now, centered vertically)
+DrawRect(cx - offset, cy, armSize, thickness, r, g, b, 255) -- middle-left
+DrawRect(cx + offset, cy, armSize, thickness, r, g, b, 255) -- middle-right
+
+-- top row (new, same width, a bit above)
+DrawRect(cx - offset, cy - rowGap, armSize, thickness, r, g, b, 255) -- top-left
+DrawRect(cx + offset, cy - rowGap, armSize, thickness, r, g, b, 255) -- top-right
+
         end
 
         Wait(0)
