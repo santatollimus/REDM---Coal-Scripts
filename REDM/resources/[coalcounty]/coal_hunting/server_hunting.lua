@@ -56,7 +56,8 @@ local function giveMeatToPlayer(source, rewards)
         if r.item and r.count and r.count > 0 then
             vorpInventory.addItem(source, r.item, r.count)
 
-            local label = r.display or prettifyItemName(r.item)
+            local itemName = tostring(r.item)
+            local label    = r.display or getItemLabel(itemName)
             table.insert(parts, string.format("%dx %s", r.count, label))
         end
     end
@@ -67,6 +68,7 @@ local function giveMeatToPlayer(source, rewards)
 
     return nil
 end
+
 
 -- Fired from client when a carcass/pelt is picked up
 RegisterNetEvent("coal_hunting:PickedUpCarcass")

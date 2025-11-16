@@ -119,7 +119,7 @@ HuntingConfig = {
         },
         -- Medium Grey Wolf ($4.15 -> Tier S -> 5)
         [-885451903] = {
-            { item = "biggame", count = 1 },
+            { item = "biggame", count = 1, display = "Big Game Meat" },
         },
         -- Small Grey Wolf ($4.80 -> Tier S -> 5, but game instead of biggame)
         [-829273561] = {
