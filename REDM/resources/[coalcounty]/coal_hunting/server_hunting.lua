@@ -1,7 +1,9 @@
+-- server_hunting.lua - Coal County hunting rewards
+
 local Core          = exports.vorp_core:GetCore()
 local vorpInventory = exports.vorp_inventory:vorp_inventoryApi()
 
--- Look up reward table for a given model hash
+-- Look up rewards for a given model hash from HuntingConfig in coal_hunting.lua
 local function getRewardsForModel(model)
     if not HuntingConfig or not HuntingConfig.rewards then
         return nil
@@ -9,14 +11,13 @@ local function getRewardsForModel(model)
     return HuntingConfig.rewards[model]
 end
 
--- "raw_venison" -> "Raw venison"
 local function prettifyItemName(item)
     item = tostring(item or "")
     item = item:gsub("_", " ")
     return item:gsub("^%l", string.upper)
 end
 
--- Give items and build a human-readable summary string
+-- Give items and build a readable summary string
 local function giveMeatToPlayer(source, rewards)
     local parts = {}
 
@@ -36,7 +37,7 @@ local function giveMeatToPlayer(source, rewards)
     return nil
 end
 
--- Fired from client when a carcass is picked up
+-- Fired from client when a carcass/pelt is picked up
 RegisterNetEvent("coal_hunting:PickedUpCarcass")
 AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
     local src = source
@@ -47,26 +48,24 @@ AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
         return
     end
 
-    -- Look up rewards
     local rewards = getRewardsForModel(model)
     if not rewards then
-        print(("[coal_hunting] No rewards configured for model hash: %s"):format(tostring(model)))
+        local msg = ("[coal_hunting] No rewards configured for model hash: %s")
+                  :format(tostring(model))
+        print(msg)
         TriggerClientEvent("vorp:TipRight", src,
             "No hunting rewards configured for this carcass (model " .. tostring(model) .. ")", 4000)
+        -- also send to debugger if you like
+        TriggerClientEvent("coal_debugger:rewardLog", src, msg)
         return
     end
 
-    -- Tell all clients to delete the carcass entity by netId
+    -- Ask all clients to delete the carcass entity, if we have a netId
     if netId then
         TriggerClientEvent("coal_hunting:ClientDeleteCarcass", -1, netId)
     end
 
-    -- OLD Give meat & build summary
-   -- local summary = giveMeatToPlayer(src, rewards)
-   -- local msg = summary and ("You collected: " .. summary)
-                     --  or  "You collected nothing from the carcass."
---					  or ""
-    -- Give items & build summary text
+    -- Give items & build summary
     local summary = giveMeatToPlayer(src, rewards)
 
     local msg
@@ -77,15 +76,13 @@ AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
     else
         msg = ("[coal_hunting] Gave nothing to %s from model %s")
               :format(tostring(src), tostring(model))
-        TriggerClientEvent("vorp:TipRight", src, "You collected nothing from the carcass.", 4000)
+        TriggerClientEvent("vorp:TipRight", src,
+            "You collected nothing from the carcass.", 4000)
     end
 
-    -- F8 server log
+    -- Server F8 log
     print(msg)
 
-    -- Send to Coal Debugger on that player’s client
+    -- Send to Coal Debugger (client-side)
     TriggerClientEvent("coal_debugger:rewardLog", src, msg)
-end)
-
-    TriggerClientEvent("vorp:TipRight", src, msg, 4000)
 end)
