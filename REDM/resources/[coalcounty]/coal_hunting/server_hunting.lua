@@ -61,11 +61,31 @@ AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
         TriggerClientEvent("coal_hunting:ClientDeleteCarcass", -1, netId)
     end
 
-    -- Give meat & build summary
-    local summary = giveMeatToPlayer(src, rewards)
-    local msg = summary and ("You collected: " .. summary)
+    -- OLD Give meat & build summary
+   -- local summary = giveMeatToPlayer(src, rewards)
+   -- local msg = summary and ("You collected: " .. summary)
                      --  or  "You collected nothing from the carcass."
-					  or ""
+--					  or ""
+    -- Give items & build summary text
+    local summary = giveMeatToPlayer(src, rewards)
+
+    local msg
+    if summary then
+        msg = ("[coal_hunting] Gave to %s from model %s: %s")
+              :format(tostring(src), tostring(model), tostring(summary))
+        TriggerClientEvent("vorp:TipRight", src, "You collected: " .. summary, 4000)
+    else
+        msg = ("[coal_hunting] Gave nothing to %s from model %s")
+              :format(tostring(src), tostring(model))
+        TriggerClientEvent("vorp:TipRight", src, "You collected nothing from the carcass.", 4000)
+    end
+
+    -- F8 server log
+    print(msg)
+
+    -- Send to Coal Debugger on that player’s client
+    TriggerClientEvent("coal_debugger:rewardLog", src, msg)
+end)
 
     TriggerClientEvent("vorp:TipRight", src, msg, 4000)
 end)

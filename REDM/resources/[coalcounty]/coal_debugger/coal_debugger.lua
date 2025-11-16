@@ -7,6 +7,60 @@
 local lastLoggedPed = nil
 local seenDeadPeds = {}
 local lastCarriedEntity = nil
+----------------------------------------------------------------------
+-- On-screen debug box (optional HUD output)
+----------------------------------------------------------------------
+
+local debugLines = {}
+local debugTimer = 0
+local debugDuration = 8000 -- ms visible
+
+local function ShowDebugText(text)
+    debugTimer = GetGameTimer() + debugDuration
+    table.insert(debugLines, 1, text)
+
+    -- keep only newest 5–6 lines
+    if #debugLines > 6 then
+        table.remove(debugLines)
+    end
+end
+
+CreateThread(function()
+    while true do
+        Wait(0)
+
+        if debugTimer > GetGameTimer() and #debugLines > 0 then
+            -- top-left box
+            local baseX, baseY = 0.013, 0.025
+            local width = 0.40
+            local heightPerLine = 0.022
+            local totalHeight = (#debugLines * heightPerLine) + 0.010
+
+            -- background
+            DrawRect(
+                baseX + width / 2,
+                baseY + totalHeight / 2,
+                width,
+                totalHeight,
+                0, 0, 0, 190
+            )
+
+            -- text
+            for i, line in ipairs(debugLines) do
+                SetTextScale(0.30, 0.30)
+                SetTextColour(255, 255, 255, 255)
+                SetTextCentre(false)
+                SetTextFontForCurrentCommand(0)
+                SetTextDropshadow(1, 0, 0, 0, 255)
+                SetTextOutline()
+
+                SetTextEntry("STRING")
+                AddTextComponentString(line)
+                DrawText(baseX + 0.006, baseY + (i - 1) * heightPerLine)
+            end
+        end
+    end
+end)
 
 ----------------------------------------------------------------------
 -- Helper to log nicely to F8
@@ -116,3 +170,19 @@ RegisterNetEvent("coal_debugger:RewardSummary", function(model, summary)
     ))
 end)
 -----------------------------------------------------------------------
+----------------------------------------------------------------------
+-- Reward debug from coal_hunting
+----------------------------------------------------------------------
+
+RegisterNetEvent("coal_debugger:rewardLog")
+AddEventHandler("coal_debugger:rewardLog", function(msg)
+    msg = tostring(msg or "")
+
+    -- F8 console
+    print("[coal_debugger] " .. msg)
+
+    -- Optional HUD box, if you’re using ShowDebugText
+    if ShowDebugText then
+        ShowDebugText(msg)
+    end
+end)
