@@ -363,9 +363,19 @@ Config.SkinnableAnimals = {
         action = "Skinned",
         type = "satchel_textures"
     },
-    --[[   [-2021043433] = { name = "Elk", givenItem = { "venison", "elkantler", "elks" }, givenAmount = { 1, 1, 1 }, givenDisplay = {
-       "Elk antler", "Elk pelt" }, money = 0, gold = 0, rolPoints = 0, xp = 1, texture = "animal_elk", action =
-    "Skinned", type = "satchel_textures" }, ]]
+	[-2021043433] = { 
+		name = "Elk", 
+		givenItem = { "elkantler", "deerheart", "elks" }, 
+		givenAmount = { 1, 1, 1,}, 
+		givenDisplay = { "Elk antler", "Deer Heart", "Elk pelt" }, 
+		money = 0, 
+		gold = 0, 
+		rolPoints = 0, 
+		xp = 1, 
+		texture = "animal_elk", 
+		action = "Skinned", 
+		type = "satchel_textures" 
+	},
     [252669332]   = {
         name = "American Red Fox",
         givenItem = {"foxt", "foxskin" },
@@ -1587,9 +1597,9 @@ Config.SkinnableAnimals = {
 
     [-2021043433] = {
         name = "Legendary White Elk",
-        givenItem = { "elkantler", "legelks" },
+        givenItem = { "elkantler", "elks" },
         givenAmount = { 1, 1 },
-        givenDisplay = { "Elk antler", "Legendary Elk pelt" },
+        givenDisplay = { "Elk antler", "Elk pelt" },
         money = 0,
         gold = 0,
         rolPoints = 0,
