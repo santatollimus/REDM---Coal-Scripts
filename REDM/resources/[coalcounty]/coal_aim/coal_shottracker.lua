@@ -1,7 +1,15 @@
 -- coal_shottracker.lua
 -- Minimal HIT / MISS tracker with debounce so 1 shot = 1 message
+-- Now shows status in the top-right of the screen instead of chat
 
 local INPUT_ATTACK = 0x07CE1E61 -- LMB / RT
+
+-- How long the status text stays on screen (ms)
+local STATUS_DURATION = 1500
+
+-- State for HUD text
+local currentStatus = nil
+local statusExpireTime = 0
 
 local function RotationToDirection(rot)
     -- rot is a vector3 of degrees
@@ -21,13 +29,45 @@ local function RotationToDirection(rot)
     }
 end
 
-local function sendChat(msg)
-    TriggerEvent("chat:addMessage", {
-        color = {255, 255, 255},
-        args = {"ShotTracker", msg}
-    })
+-- Instead of sending to chat, update the HUD status
+local function setStatus(msg)
+    currentStatus = msg
+    statusExpireTime = GetGameTimer() + STATUS_DURATION
 end
 
+-- Draw text in the top-right corner
+local function DrawStatusText()
+    if not currentStatus then
+        return
+    end
+
+    local now = GetGameTimer()
+    if now > statusExpireTime then
+        currentStatus = nil
+        return
+    end
+
+    -- Basic text setup
+    SetTextFont(4)          -- font index (try 0–4 if you want to experiment)
+    SetTextScale(0.5, 0.5)  -- size
+    SetTextProportional(1)
+    SetTextColour(255, 255, 255, 255)
+    SetTextOutline()
+    SetTextDropshadow(1, 0, 0, 0, 255)
+
+    -- No fancy justification/wrap, just left-aligned text near top-right
+    SetTextCentre(false)
+
+    BeginTextCommandDisplayText("STRING")
+    AddTextComponentSubstringPlayerName(currentStatus)
+
+    -- x, y screen coords: 0.0 = left/top, 1.0 = right/bottom
+    -- 0.90, 0.05 = near top-right but safely on-screen
+    EndTextCommandDisplayText(0.90, 0.05)
+end
+
+
+-- Thread 1: detect shots and set status
 CreateThread(function()
     print("[coal_shottracker] loaded")
 
@@ -72,19 +112,27 @@ CreateThread(function()
 
                 if hit == 1 and entityHit ~= 0 and DoesEntityExist(entityHit) then
                     if IsEntityAPed(entityHit) then
-                        sendChat("HIT: ped/animal")
+                        setStatus("HIT: ped/animal")
                         print("[coal_shottracker] HIT ped/animal:", entityHit)
                     else
-                        sendChat("HIT: object / world")
+                        setStatus("HIT: object / world")
                         print("[coal_shottracker] HIT object/world:", entityHit)
                     end
                 else
-                    sendChat("MISS")
+                    setStatus("MISS")
                     print("[coal_shottracker] MISS")
                 end
             end
         end
 
         ::continue::
+    end
+end)
+
+-- Thread 2: draw the HUD text every frame
+CreateThread(function()
+    while true do
+        Wait(0)
+        DrawStatusText()
     end
 end)

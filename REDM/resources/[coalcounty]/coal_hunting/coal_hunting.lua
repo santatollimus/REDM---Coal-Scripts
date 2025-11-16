@@ -315,7 +315,7 @@ HuntingConfig = {
             { item = "bird", count = 1 },
         },
 
-        -- Eagles / Egrets (high-ish but still birds, keep 2)
+        -- Eagles / Egrets (high-ish but still birds, keep 1)
         [1459778951] = {                    -- Eagle
             { item = "bird", count = 1 },
         },
@@ -393,7 +393,11 @@ HuntingConfig = {
 			{ item = "peasantf", count = 1 },
 			{ item = "peasantb", count = 1 },
         },
-
+		-- California Condor
+		[2105463796] = {
+			{ item = "bird", count = 1 },
+			{ item = "condorf", count = 2 },
+		},
         -- American White Pelican ($1.5 -> Tier C -> 2)
         [1265966684] = {
             { item = "bird", count = 1 },
