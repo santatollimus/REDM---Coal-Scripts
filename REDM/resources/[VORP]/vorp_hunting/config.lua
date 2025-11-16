@@ -2348,7 +2348,7 @@ Config.Animals = {
     },
     [-1414989025]  = {
         name = "Virginia Possum",
-        givenItem = { "game" },
+        givenItem = { "game", "opossumc", "opossums" },
         givenAmount = { 0 },
         money = 2.75,
         gold = 0,

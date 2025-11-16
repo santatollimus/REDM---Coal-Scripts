@@ -194,7 +194,9 @@ HuntingConfig = {
 
         -- Virginia Possum (~2.0 -> Tier C -> 2)
 		[-1414989025] = {
-		{ item = "game", count = 2 },
+		{ item = "game", count = 1 },
+		[ item = "opossumc", count = 1},
+		[ item = "opossums", count = 1},
 		},
 
         ----------------------------------------------------------------
