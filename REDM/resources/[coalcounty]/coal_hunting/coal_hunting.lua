@@ -10,6 +10,17 @@ HuntingConfig = {
 		--Generic pelt prop4 (delete it, but give noitems)
         [85379810] = {},
 		----------------------------------------------------------------
+		-- MUTTON-TYPE ANIMALS (Sheep, Ram)
+		----------------------------------------------------------------
+		--Sierra Nevada Ram
+		[-1568716381] = {
+			{ item = "Mutton", count = 2 },
+		},
+		--Merino Sheep
+		[40345436] = {
+			{ item = "Mutton", count = 2 },
+		},
+		----------------------------------------------------------------
         -- VENISON-TYPE ANIMALS (DEER / BUCK / PRONGHORN / ELK)
         ----------------------------------------------------------------
 
