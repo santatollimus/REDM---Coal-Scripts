@@ -17,6 +17,37 @@ local function prettifyItemName(item)
     return item:gsub("^%l", string.upper)
 end
 
+-- Try to get the VORP label from the DB; fall back to prettified name
+local function getItemLabel(itemName)
+    itemName = tostring(itemName or "")
+
+    -- 1) Newer vorp_inventory export: getServerItem
+    local ok, data = pcall(function()
+        if exports.vorp_inventory and exports.vorp_inventory.getServerItem then
+            return exports.vorp_inventory:getServerItem(itemName)
+        end
+    end)
+
+    if ok and data and data.label then
+        return data.label
+    end
+
+    -- 2) Older API: vorpInventory.getDBItem, if present
+    if vorpInventory and vorpInventory.getDBItem then
+        local ok2, data2 = pcall(function()
+            -- src isn't used for DB lookup, 0 is fine
+            return vorpInventory.getDBItem(0, itemName)
+        end)
+
+        if ok2 and data2 and data2.label then
+            return data2.label
+        end
+    end
+
+    -- 3) Fallback: prettified item name
+    return prettifyItemName(itemName)
+end
+
 -- Give items and build a readable summary string
 local function giveMeatToPlayer(source, rewards)
     local parts = {}
