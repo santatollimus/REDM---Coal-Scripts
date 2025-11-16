@@ -233,8 +233,14 @@ HuntingConfig = {
         },
 
         ----------------------------------------------------------------
-        -- STRINGY MEAT (RACCOON / MUSKRAT / SKUNK)
+        -- STRINGY MEAT (RACCOON / MUSKRAT / SKUNK / BADGER)
         ----------------------------------------------------------------
+		-- American Badger
+		[-1170118274] = {
+			{ item = "stringy", count = 1 },
+			{ item = "badgers", count = 1 },
+		},
+			
 		-- Striped Skunk ($2.25 -> Tier B -> 3)
         [-1211566332] = {
             { item = "stringy", count = 1 },
