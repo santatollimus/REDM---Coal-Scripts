@@ -60,8 +60,8 @@ AddEventHandler("coal_hunting:ClientDeleteCarcass", function(netId)
     local thisLast  = lastCarriedEntity
 
     CreateThread(function()
-        -- wait 2 seconds before removing the body
-        Wait(1500)
+        -- wait 1 seconds before removing the body
+        Wait(1000)
 
         local ent = nil
 

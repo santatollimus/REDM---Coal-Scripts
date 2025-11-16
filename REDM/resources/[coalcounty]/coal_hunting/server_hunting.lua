@@ -96,7 +96,7 @@ AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
 
     -- now delay the reward / tip / debugger log by 2 seconds
     CreateThread(function()
-        Wait(2000)
+        Wait(1000)
 
         local summary = giveMeatToPlayer(src, rewards)
 
