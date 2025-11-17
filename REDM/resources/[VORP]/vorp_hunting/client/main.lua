@@ -240,6 +240,13 @@ CreateThread(function()
         if size > 0 then
             for index = 0, size - 1 do
                 local event = GetEventAtIndex(0, index)
+				                local event = GetEventAtIndex(0, index)
+
+                -- DEBUG: log events while you play with mercy kill
+                if event ~= 0 then
+                    print("EVENT HASH:", event)
+                end
+
                 if event == `EVENT_LOOT_COMPLETE` then
                     local eventDataSize = 3
                     local eventDataStruct = DataView.ArrayBuffer(24)
