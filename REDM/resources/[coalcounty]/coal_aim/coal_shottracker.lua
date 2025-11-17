@@ -118,7 +118,7 @@ CreateThread(function()
                         setStatus("HIT", 255, 0, 0, 255)
                     else
                         -- ORANGE
-                        setStatus("MISS", 255, 165, 0, 255)
+                        setStatus("MAYBE", 255, 165, 0, 255)
                     end
                 else
                     -- WHITE

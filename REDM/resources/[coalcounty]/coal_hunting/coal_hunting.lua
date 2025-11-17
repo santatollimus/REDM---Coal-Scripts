@@ -17,6 +17,12 @@ HuntingConfig = {
 		[1464167925] = {},
 		--Generic turkey/turtle pelt prop {delete it, but givenoitems}
 		[-1594634038] = {},
+		--Generic bird pelt prop {delete it, but givenoitems}
+		[-1350548143] = {},
+				--Generic bird pelt prop {delete it, but givenoitems}
+		[1378936871] = {},
+						--Generic bird pelt prop {delete it, but givenoitems}
+		[-547982328] = {},
 		----------------------------------------------------------------
 		--"Legend 'wait for it' . . . daries"
 		-- Legendary Boa
@@ -186,7 +192,7 @@ HuntingConfig = {
 
         -- Coyote ($3.25 -> Tier A -> 4)
         [480688259] = {
-            { item = "game", count = 2 },
+            { item = "game", count = 1 },
         },
 
         -- Gila Monster ($2.75 -> Tier B -> 3)
@@ -198,21 +204,23 @@ HuntingConfig = {
 
         -- Alpine Goat ($2.50 -> Tier B -> 3)
         [-753902995] = {
-            { item = "game", count = 3 },
+            { item = "game", count = 1 },
         },
 
         -- North American Beaver ($2.75 -> Tier B -> 3)
         [759906147] = {
-            { item = "game", count = 3 },
+            { item = "game", count = 1 },
         },
 
 		-- Snapping Turtle (~2.0–2.5 range -> 2)
 		[-407730502] = {
 		{ item = "Gamey_Meat", count = 2 },
+		--{ item = "turtleShell", count = 1 },
+	--	{ item = "turtlet", count = 1 },
 		},
 		-- Turtle
 		[-1594634038] = {
-		{ item = "Gamey_Meat", count = 2 },
+		--{ item = "Gamey_Meat", count = 2 },
 		},
 
         -- Water / Boa / Rattlesnakes / Fer-de-lance (~2.75–3.0 -> Tier B -> 3)
@@ -326,6 +334,8 @@ HuntingConfig = {
         -- Vulture (~2.5–2.75 -> Tier B -> 3)
         [1104697660] = {
             { item = "bird", count = 1 },
+			{ item = "condorf", count = 2 },
+			{ item = "condorb", count = 1 },
         },
 
   --       Turkeys ($2.0 -> Tier C -> 2)

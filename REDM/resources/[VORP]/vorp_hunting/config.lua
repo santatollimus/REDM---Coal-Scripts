@@ -439,7 +439,7 @@ Config.SkinnableAnimals = {
     },
     [-407730502]  = {
         name = "Snapping Turtle",
-        givenItem = { "turtleShell", "turtlet" },
+        givenItem = { "TurtleShell", "turtlet" },
         givenAmount = { 1, 1 },
         givenDisplay = { "Turtle shell", "Turtle tooth" },
         money = 0,
