@@ -4,6 +4,13 @@ local peltz = {}
 local prompts = GetRandomIntInRange(0, 0xffffff)
 local openButcher
 local pressed = false
+--local MERCY_KILL_EVENT = 1626561060
+local MERCY_KILL_EVENT = 402722103
+--local MERCY_KILL_EVENT = 2145012826
+--local MERCY_KILL_EVENT = 735942751
+
+local INTERACTION_ANIMAL_SKIN = joaat("INTERACTION_ANIMAL_SKIN")
+
 
 RegisterNetEvent('vorp_hunting:finalizeReward', function(entity, horse)
     -- Remove Animal/Pelt
@@ -231,34 +238,82 @@ CreateThread(function()
 end)
 
 --  Check for Animals being skinned/plucked/stored
+--  AND auto-skin after mercy kill
 CreateThread(function()
     repeat Wait(1000) until LocalPlayer.state.IsInSession
 
     while true do
         Wait(0)
+
         local size = GetNumberOfEvents(0)
         if size > 0 then
             for index = 0, size - 1 do
                 local event = GetEventAtIndex(0, index)
-				                local event = GetEventAtIndex(0, index)
+-----------------------
+--EVENT HASH HUNTER
+-----------------------
+                local event = GetEventAtIndex(0, index)
 
                 -- DEBUG: log events while you play with mercy kill
                 if event ~= 0 then
                     print("EVENT HASH:", event)
                 end
+----------------------
+----------------------
+                -- We care about loot complete and mercy kill
+                if event == `EVENT_LOOT_COMPLETE` or event == MERCY_KILL_EVENT then
+                    local eventDataSize   = 3
+                    local eventDataStruct = DataView.ArrayBuffer(8 * eventDataSize)
 
-                if event == `EVENT_LOOT_COMPLETE` then
-                    local eventDataSize = 3
-                    local eventDataStruct = DataView.ArrayBuffer(24)
                     eventDataStruct:SetInt32(0, 0)
                     eventDataStruct:SetInt32(8, 0)
                     eventDataStruct:SetInt32(16, 0)
-                    local is_data_exists = Citizen.InvokeNative(0x57EC5FA4D4D6AFCA, 0, index, eventDataStruct:Buffer(),
-                        eventDataSize)
-                    if is_data_exists then
-                        if PlayerPedId() == eventDataStruct:GetInt32(0) then
-                            local pedid = eventDataStruct:GetInt32(8)
-                            if eventDataStruct:GetInt32(16) == 1 then
+
+                    local is_data_exists = Citizen.InvokeNative(
+                        0x57EC5FA4D4D6AFCA,   -- GET_EVENT_DATA
+                        0,                    -- event group
+                        index,
+                        eventDataStruct:Buffer(),
+                        eventDataSize
+                    )
+
+                    if not is_data_exists then
+                        goto continue_event
+                    end
+
+                    local actorPed  = eventDataStruct:GetInt32(0)
+                    local animalPed = eventDataStruct:GetInt32(8)
+                    local flag      = eventDataStruct:GetInt32(16)
+
+                    ------------------------------------------------
+                    -- AUTO-SKIN AFTER MERCY KILL
+                    ------------------------------------------------
+                    if event == MERCY_KILL_EVENT then
+                        if actorPed == PlayerPedId() and DoesEntityExist(animalPed) then
+                            -- small delay so mercy-kill anim finishes
+                            CreateThread(function()
+                                Wait(500)
+                                if DoesEntityExist(animalPed) then
+                                    Citizen.InvokeNative(
+                                        0xCD181A959CFDD7F4,     -- TASK_ANIMAL_INTERACTION
+                                        actorPed,
+                                        animalPed,
+                                        INTERACTION_ANIMAL_SKIN,
+                                        0,
+                                        0
+                                    )
+                                end
+                            end)
+                        end
+                    end
+
+                    ------------------------------------------------
+                    -- ORIGINAL LOOT COMPLETE / SKINNED REWARD
+                    ------------------------------------------------
+                    if event == `EVENT_LOOT_COMPLETE` then
+                        if PlayerPedId() == actorPed then
+                            local pedid = animalPed
+                            if flag == 1 then
                                 local model = GetEntityModel(pedid)
                                 if model and Config.SkinnableAnimals[model] then
                                     if Config.SkinnableAnimals[model].deletePelt then
@@ -270,16 +325,22 @@ CreateThread(function()
                                         if isPelt and not isAnimal then
                                             SetEntityAsMissionEntity(holding, true, true)
                                             SetEntityAsNoLongerNeeded(holding)
-
                                             DeleteEntity(holding)
                                         end
                                     end
-                                    TriggerServerEvent("vorp_hunting:giveReward", "skinned", { model = model }, true)
+
+                                    TriggerServerEvent("vorp_hunting:giveReward",
+                                        "skinned",
+                                        { model = model },
+                                        true
+                                    )
                                 end
                             end
                         end
                     end
                 end
+
+                ::continue_event::
             end
         end
     end
