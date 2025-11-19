@@ -38,6 +38,41 @@ HuntingConfig = {
 			{ item = "leggbears", count = 1 },
 	--		{ item = "bearc", count = 1 },
 		},
+		--Legendary Golden Spirit Bear pelt
+		[98597207] = {
+			{ item = "biggame", count = 3 },
+			{ item = "legbears4", count = 1 },
+			{ item = "bearc", count = 1 },
+		},
+		--Legendary Owiza Spirit Bear pelt
+		[55897452] = {
+			{ item = "biggame", count = 3 },
+			{ item = "legbears2", count = 1 },
+			{ item = "bearc", count = 1 },
+		},
+		--Legendary Ridgeback Spirit Bear pelt
+		[499820607] = {
+			{ item = "biggame", count = 3 },
+			{ item = "legbears3", count = 1 },
+			{ item = "bearc", count = 1 },
+		},
+		--Legendary Sun Alligator
+		[-829337926] = {
+			{ item = "legaligators2", count = 1 },
+			{ item = "aligatorto", count = 1 },
+		},
+		--Legendary Banded Alligator
+		[-1828919758] = {
+			{ item = "legaligators3", count = 1 },
+			{ item = "aligatorto", count = 2 },
+		},
+		--Legendary Teca Alligator
+		[-1804478060] = {
+			{ item = "legaligators1", count = 1 },
+			{ item = "aligatorto", count = 2 },
+		},
+		--
+		
 		----------------------------------------------------------------
 		-- MUTTON-TYPE ANIMALS (Sheep, Ram)
 		----------------------------------------------------------------
@@ -65,7 +100,7 @@ HuntingConfig = {
 
         -- American Pronghorn Doe ($3.75 -> Tier A -> 4)
         [1755643085] = {
-            { item = "venison", count = 2 },
+            { item = "venison", count = 1 },
         },
 
         -- Elk ($3.90 -> Tier A -> 4)

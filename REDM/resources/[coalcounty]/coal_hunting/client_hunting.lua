@@ -1,7 +1,8 @@
 -- client_hunting.lua
 local Core = exports.vorp_core:GetCore()
-
+local DECOR_OUTFIT = "coal_outfitPreset"
 local lastCarriedEntity = 0
+DecorRegister(DECOR_OUTFIT, 3) -- int
 
 local function isPedCarryingSomething(ped)
     -- IS_PED_CARRYING_SOMETHING
@@ -37,12 +38,19 @@ CreateThread(function()
 
         local model = GetEntityModel(ent)
 
+        -- Try to read an outfit preset that was stored on the ped
+        local outfitIndex = nil
+        if DecorExistOn(ent, DECOR_OUTFIT) then
+            outfitIndex = DecorGetInt(ent, DECOR_OUTFIT)
+        end
+
         TriggerEvent("coal_debugger:log",
-            ("[coal_hunting] Now carrying entity: netId=%s, model=%s")
-            :format(tostring(netId), tostring(model))
+            ("[coal_hunting] Now carrying entity: netId=%s, model=%s, outfit=%s")
+            :format(tostring(netId), tostring(model), tostring(outfitIndex))
         )
 
-        TriggerServerEvent("coal_hunting:PickedUpCarcass", netId, model)
+        TriggerServerEvent("coal_hunting:PickedUpCarcass", netId, model, outfitIndex)
+
     end
 end
 
@@ -100,4 +108,3 @@ AddEventHandler("coal_hunting:ClientDeleteCarcass", function(netId)
         end
     end)
 end)
-

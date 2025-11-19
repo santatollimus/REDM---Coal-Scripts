@@ -1,6 +1,6 @@
 Citizen.CreateThread(function()
     -- Your Discord application ID (from Discord Developer Portal)
-    SetDiscordAppId(1437237690486624368)  -- <--- replace with your real ID
+	SetDiscordAppId(1437237690486624368)
 
     -- Large image key: must match the asset name you uploaded
     SetDiscordRichPresenceAsset('coal_county')

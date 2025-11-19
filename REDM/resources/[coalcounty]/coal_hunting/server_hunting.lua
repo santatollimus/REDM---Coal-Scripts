@@ -4,12 +4,32 @@ local Core          = exports.vorp_core:GetCore()
 local vorpInventory = exports.vorp_inventory:vorp_inventoryApi()
 
 -- Look up rewards for a given model hash from HuntingConfig in coal_hunting.lua
-local function getRewardsForModel(model)
+-- Build a combined key "modelHash:outfitIndex"
+local function makeOutfitKey(model, outfitIndex)
+    if not model or outfitIndex == nil then
+        return nil
+    end
+    return tostring(model) .. ":" .. tostring(outfitIndex)
+end
+
+-- Look up rewards for a given model hash (+ optional outfit index)
+local function getRewardsForModel(model, outfitIndex)
     if not HuntingConfig or not HuntingConfig.rewards then
         return nil
     end
-    return HuntingConfig.rewards[model]
+
+    local rewardsTable = HuntingConfig.rewards
+
+    -- 1) Try model+outfit override if we have an outfit
+    local key = makeOutfitKey(model, outfitIndex)
+    if key and rewardsTable[key] then
+        return rewardsTable[key]
+    end
+
+    -- 2) Fallback: plain model-only rewards
+    return rewardsTable[model]
 end
+
 
 local function prettifyItemName(item)
     item = tostring(item or "")
@@ -72,11 +92,13 @@ end
 
 -- Fired from client when a carcass/pelt is picked up
 RegisterNetEvent("coal_hunting:PickedUpCarcass")
-AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model)
+AddEventHandler("coal_hunting:PickedUpCarcass", function(netId, model, outfitIndex)
+
     local src = source
     model = tonumber(model) or model
 
-    local rewards = getRewardsForModel(model)
+    local rewards = getRewardsForModel(model, outfitIndex)
+
     if not rewards then
         local msg = ("[coal_hunting] No rewards configured for model hash: %s")
             :format(tostring(model))
