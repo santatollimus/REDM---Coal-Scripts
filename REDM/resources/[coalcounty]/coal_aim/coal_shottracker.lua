@@ -68,7 +68,7 @@ local function DrawStatusText()
     SetTextCentre(false)   -- left aligned
 
     -- top-right
-    DisplayText(str, 0.495, 0.485)
+    DisplayText(str, 0.496, 0.489)
 end
 
 ----------------------------------------------------
@@ -114,15 +114,15 @@ CreateThread(function()
 
                 if hit == 1 and entityHit ~= 0 and DoesEntityExist(entityHit) then
                     if IsEntityAPed(entityHit) then
-                        -- RED
-                        setStatus("HIT", 255, 0, 0, 255)
+                        -- RED HIT
+                        setStatus("X", 255, 0, 0, 255)
                     else
-                        -- ORANGE
-                        setStatus("...", 255, 165, 0, 255)
+                        -- ORANGE ALMOST
+                        setStatus("", 255, 165, 0, 255)
                     end
                 else
-                    -- WHITE
-                    setStatus("MISS", 255, 255, 255, 255)
+                    -- WHITE MISS
+                    setStatus("", 255, 255, 255, 255)
                 end
             end
         end
