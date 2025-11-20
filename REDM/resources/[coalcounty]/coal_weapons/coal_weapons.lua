@@ -1168,12 +1168,99 @@ Config.Weapons = {
     },
 }
 
+
+
+
 -- OPTIONAL: This mostly affects AI; you can keep, tweak, or remove it.
 -- 100 is basically aimbot-level for peds.
+--=====================================================================
+--  INTERNAL CONSTANTS
+--=====================================================================
+
+local BASE_DAMAGE = 50.0
+
+-- cache so we only read base values once
+local baseSpreadCache = {}
+local baseRecoilCache = {}
+
+local function getBaseSpread(weaponHash)
+    if baseSpreadCache[weaponHash] == nil then
+        baseSpreadCache[weaponHash] = GetWeaponAccuracySpread(weaponHash)
+    end
+    return baseSpreadCache[weaponHash] or 0.0
+end
+
+local function getBaseRecoil(weaponHash)
+    if baseRecoilCache[weaponHash] == nil then
+        baseRecoilCache[weaponHash] = GetWeaponRecoilShakeAmplitude(weaponHash)
+    end
+    return baseRecoilCache[weaponHash] or 0.0
+end
+
+--=====================================================================
+--  APPLY MODIFIERS
+--=====================================================================
+
+local function ApplyWeaponModifiers()
+    for weaponHash, stats in pairs(Config.Weapons) do
+        if type(weaponHash) == "number" then
+            local damage   = stats.damage   or BASE_DAMAGE
+            local accuracy = stats.accuracy or 1.0
+            local spread   = stats.spread   or 1.0
+            local recoil   = stats.recoil   or 1.0
+
+            -- DAMAGE: relative to BASE_DAMAGE
+            local dmgMult = damage / BASE_DAMAGE
+            SetWeaponDamageModifier(weaponHash, dmgMult)
+
+            -- SPREAD / ACCURACY:
+            --   smaller spread = more accurate
+            --   finalSpread = baseSpread * spreadMult * (1/accuracyMult)
+            local baseSpread = getBaseSpread(weaponHash)
+            if baseSpread > 0.0 then
+                local finalSpread = baseSpread * spread * (1.0 / accuracy)
+                SetWeaponAccuracySpread(weaponHash, finalSpread)
+            end
+
+            -- RECOIL:
+            --   finalRecoil = baseRecoil * recoilMult
+            local baseRecoil = getBaseRecoil(weaponHash)
+            if baseRecoil > 0.0 then
+                local finalRecoil = baseRecoil * recoil
+                SetWeaponRecoilShakeAmplitude(weaponHash, finalRecoil)
+            end
+        end
+    end
+
+    print("[coal_weapons] Weapon modifiers applied.")
+end
+
+--=====================================================================
+--  STARTUP: INITIAL + PERIODIC APPLY
+--=====================================================================
+
+CreateThread(function()
+    -- wait for player & weapon data to be available
+    while not PlayerPedId() do Wait(100) end
+    Wait(1500)
+
+    ApplyWeaponModifiers()
+
+    -- re-apply every 60s to guard against other scripts changing things
+    while true do
+        Wait(60000)
+        ApplyWeaponModifiers()
+    end
+end)
+
+--=====================================================================
+--  OPTIONAL: GLOBAL PLAYER ACCURACY (kept from your original file)
+--=====================================================================
+
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
-        -- Try 75–85 if you want high but not perfect AI accuracy:
+        -- 100 = aimbot; 75–85 is “very good”
         SetPedAccuracy(ped, 85)
         Wait(0)
     end
