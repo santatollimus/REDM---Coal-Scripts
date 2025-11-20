@@ -2,7 +2,7 @@ local chance = 0
 local skillGap = 20
 
 function openGui(sentLength,taskID,namesent,chancesent,skillGapSent)
-    TriggerEvent("vorp:TipBottom", "Press E At The Spot", 4000)
+    TriggerEvent("vorp:TipBottom", "Press F At The Spot", 3000)
     Wait(1000)
     guiEnabled = true
     SetNuiFocus(guiEnabled,false)

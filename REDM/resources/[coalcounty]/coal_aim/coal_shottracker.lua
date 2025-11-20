@@ -68,7 +68,7 @@ local function DrawStatusText()
     SetTextCentre(false)   -- left aligned
 
     -- top-right
-    DisplayText(str, 0.5, 0.55)
+    DisplayText(str, 0.495, 0.485)
 end
 
 ----------------------------------------------------

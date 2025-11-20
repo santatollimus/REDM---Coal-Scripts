@@ -7,8 +7,8 @@ $(document).ready(function(){
     var percent = 0;
   
     document.onkeydown = function (data) {
-        // 69 = E
-        if (data.which == 69) {
+        // 70 = F
+        if (data.which == 70) {
           closeMain()
           $.post('http://syn_minigame/taskEnd', JSON.stringify({taskResult: percent}));
         }

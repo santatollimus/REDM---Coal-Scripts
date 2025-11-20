@@ -4,9 +4,10 @@ Lang = "English"
 
 Config.Axe = "hatchet"                  -- Item you want to use as an axe, same DB
 
-Config.ChopPromptKey = 0xD9D0E1C0       -- [ SPACE ] Key to press for prompt
-Config.CancelChopKey = 0x3B24C470       -- [ F ] Key to Cancel Choppinp
-Config.ChopTreeKey = 0x07B8BEAF         -- [ MOUSE LEFT CLICK ] Key To Chop Tree
+Config.ChopPromptKey = 0x3B24C470       -- NEW IS F OLD IS[ SPACE ] Key to press for prompt
+Config.CancelChopKey = 0xD9D0E1C0       -- NEW IS SPACE OLD IS [ F ] Key to Cancel Choppinp
+Config.ChopTreeKey = 0x3B24C470
+--Config.ChopTreeKey = 0x07B8BEAF         -- [ MOUSE LEFT CLICK ] Key To Chop Tree
 
 Config.MinSwing = 1                     -- Min Swings on a Tree
 Config.MaxSwing = 5                     -- Max Swings on a Tree

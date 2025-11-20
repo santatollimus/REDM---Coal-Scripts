@@ -158,6 +158,21 @@ RegisterCommand("lastkill", function()
     end
 end, false)
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
+-- Generic log hook used by coal_hunting (and others)
+----------------------------------------------------------------------
+
+RegisterNetEvent("coal_debugger:log")
+AddEventHandler("coal_debugger:log", function(msg)
+    msg = tostring(msg or "")
+
+    -- F8 console
+    print(msg)
+
+    -- Optional HUD box (top-left)
+    ShowDebugText(msg)
+end)
+-----------------------------------------------------------------------
 -- Debug: show hunting reward summary in F8 via coal_debugger
 RegisterNetEvent("coal_debugger:RewardSummary", function(model, summary)
     -- local player’s server ID (for clarity in logs)
